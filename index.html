@@ -1,49 +1,143 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+	<title>reveal.js</title>
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/white.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<!-- Primera slide: Título, autor y fecha -->
+			<section>
+				<h3>Desarrollo de Aplicaciones Frontend con arquitectura Redux</h1>
+					<br>
+					<p>Miguel Coleto Muñoz</p>
+					<br>
+					<div style="font-size: 20px">
+						<p>Tutorizado por Vicente Pelechano Ferragud</p>
+						<p>Grado en Ingeniería Infórmatica</p>
+						<p>Curso 2017-2018</p>
+					</div>
+			</section>
+
+			<!-- Segunda slide: Motivación del TFG -->
+			<section data-markdown>
+				<textarea data-template>
+					Una arquitectura software facilita la comunicación entre los desarrolladores de un proyecto.
+
+					Cada proyecto tiene unas necesidades concretas que **no permiten que exista una arquitectura perfecta** para todos los casos.
+					
+					Conocer muchos patrones nos proporciona herramientas para tomar mejores decisiones como ingenieros.
+				</textarea>
+			</section>
+
+			<!-- Tercera slide: Estructura de la presentación -->
+			<section data-markdown>
+				<textarea data-template>
+					* ¿Qué es Redux?
+					* Antecedentes
+					* 3 Principios
+					* Componentes de Redux
+					* Ejemplo práctico
+					* Conclusiones
+				</textarea>
+			</section>
+
+			<!-- Cuarta slide: ¿Qué es Redux? -->
+			<section>
+				<section>
+					<h3>¿Qué es Redux?</h3>
+				</section>
+				<section>
+					<p>Redux es una librería para el manejo del estado de aplicaciones Javascript</p>
+					<p>Fue creada por Dan Abramov en 2015</p>
+				</section>
+				<section>
+					<p>Las aquitecturas tradicionales basadas en <i>Model View Controller</i> permiten la comunicación bidireccional entre componentes</p>
+
+					<p>Redux propone que el flujo de datos a lo largo de la aplicación sea <b>unidireccional</b></p>
+				</section>
+				<section>
+					<p>Redux busca que los cambios en el estado sean <b>PREDECIBLES</b></p>
+				</section>
+			</section>
+
+			<!-- Quinta slide: Antecedentes -->
+			<section>
+				<section>
+					<h3>Antecedentes</h3>
+				</section>
+				<section data-markdown>
+					<textarea data-template="">
+						**Flux**
+						
+						Librería para la gestión del estado creada por Facebook para acompañar a React.
+
+						Insertar imagen
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						**Elm**
+
+						Lenguaje de programación funcional tipado que compila a Javascript.
+
+						El propio diseño del lenguaje potencia el uso de una arquitectura unidireccional.
+
+						Insertar imagen
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						**CQRS**
+
+						Es un patrón arquitectónico que propone la separación entre acciones de escritura y lectura en dos subsistemas.
+
+						Separar estas responsabilidades permite aplicar lógica más específica a cada proceso.
+					</textarea>
+				</section>
+			</section>
 		</div>
+	</div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			constrolsTutorial: false,
+			progress: false,
+			slideNumber: true,
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+			]
+		});
+	</script>
+</body>
+
 </html>
