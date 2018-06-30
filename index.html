@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="css/theme/white.css">
 
 	<!-- Theme used for syntax highlighting of code -->
-	<link rel="stylesheet" href="lib/css/zenburn.css">
+	<link rel="stylesheet" href="lib/css/custom.css">
 
 	<!-- Printing and PDF exports -->
 	<script>
@@ -57,7 +57,6 @@
 					* Antecedentes
 					* 3 Principios
 					* Componentes de Redux
-					* Ejemplo práctico
 					* Conclusiones
 				</textarea>
 			</section>
@@ -68,11 +67,14 @@
 					<h3>¿Qué es Redux?</h3>
 				</section>
 				<section>
-					<p>Redux es una librería para el manejo del estado de aplicaciones Javascript</p>
+					<p><b>Redux</b> es una librería para el manejo del estado de aplicaciones Javascript</p>
 					<p>Fue creada por Dan Abramov en 2015</p>
+					<img src="resources/dan_abramov.jpeg">
 				</section>
 				<section>
 					<p>Las aquitecturas tradicionales basadas en <i>Model View Controller</i> permiten la comunicación bidireccional entre componentes</p>
+
+					<img src="resources/mvc_diagram.png">
 
 					<p>Redux propone que el flujo de datos a lo largo de la aplicación sea <b>unidireccional</b></p>
 				</section>
@@ -92,7 +94,7 @@
 						
 						Librería para la gestión del estado creada por Facebook para acompañar a React.
 
-						Insertar imagen
+						![Diagrama de Flux](resources/flux_diagram.png)
 					</textarea>
 				</section>
 				<section data-markdown>
@@ -103,7 +105,7 @@
 
 						El propio diseño del lenguaje potencia el uso de una arquitectura unidireccional.
 
-						Insertar imagen
+						![Diagrama de Elm](resources/elm_diagram.svg)
 					</textarea>
 				</section>
 				<section data-markdown>
@@ -115,6 +117,156 @@
 						Separar estas responsabilidades permite aplicar lógica más específica a cada proceso.
 					</textarea>
 				</section>
+				<section data-markdown>
+					<textarea data-template>
+						**Event Sourcing**
+
+						Es otro patrón arquitectónico que suele ser usado en conjunto con CQRS.
+
+						Propone registrar todos los eventos de dominio para mantener un historial con todos los sucesos que han modificado el estado.
+
+						Nos proporciona mecanismos para deshacer y rehacer acciones y poder reconstruir el estado y facilitar su auditoría.
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						Redux también se basa fuertemente en principios de la **programación funcional**. En concreto:
+					</textarea>
+				</section>
+				<section>
+					<p><b>Inmutabilidad</b>: La modificación de un objeto se hace mediante copia en vez de mutación directa.</p>
+
+					<pre><code class="javascript" data-trim>
+						const arrayOfNumbers = [1,2,3]
+						const numsGreaterThan2 = arrayOfNumbers
+							.filter(number => number > 2)
+
+						console.log(arrayOfNumbers) // [1,2,3]
+						console.log(numsGreaterThan2) // [3]
+					</code></pre>
+				</section>
+				<section>
+					<p><b>Funciones puras</b>: Ninguna función realiza efectos secundarios (llamadas a base de datos, sevicios externos, etc.).</p>
+
+					<pre><code class="javascript" data-trim>
+						const addOne = x => x + 1
+					</code></pre>
+				</section>
+				<section>
+					<p>El cumplimiento de estos principios provoca que las funciones se vuelvan <b>deterministas</b>. Es decir, para un mismo <i>input</i>	el <i>output</i> siempre es el mismo.</p>
+				</section>
+			</section>
+
+			<!-- Sexta slide: 3 principios-->
+			<section>
+				<section><h3>3 principios</h3></section>
+				<section>
+					<p>Redux pretende que el manejo del estado sea <b>predecible</b>.</p>
+
+					<p>Para ello, nos impone 3 normas</p>
+				</section>
+				<section>
+					<h4>Fuente de verdad única</h4>
+
+					<p>Todo el estado de la aplicación se representa como un árbol. Se almacena en un componente <b><i>Store</i></b>.</p>
+
+					<p>Todos los componentes de la interfaz extraen los datos de este componente.</p>
+				</section>
+				<section>
+					<h4>Estado protegido contra escritura</h4>
+
+					<p>El contenedor del estado no permite la modificación directa.</p>
+
+					<p>Para modificarlo se han de propagar <b><i>Acciones</i></b> que describen qué ha pasado.</p>
+				</section>
+				<section>
+					<h4>Las modificaciones son funciones puras</h4>
+
+					<p>Cualquier modificación ha de ser determinista.</p>
+
+					<p>Las funciones puras que especifican cómo ha de cambiar el estado se llaman <b><i>Reducers</i></b>.</p>
+				</section>
+			</section>
+
+			<!-- Septima slide: Componentes de Redux -->
+			<section>
+				<section>
+					<h3>Componentes de Redux</h3>
+					<img src="resources/redux_diagram.png">
+				</section>
+				<section>
+					<h4>Acciones</h4>
+
+					<p>Son objetos portadores de la información que indica cómo se quiere cambiar el estado.</p>
+
+					<p>Contienen un campo <code>type</code> que representa el tipo de la acción. El resto de la estructura es libre.</p>
+
+					<pre><code class="javascript" data-trim>
+						const increaseCounterAction = {
+							type: "INCREASE_COUNTER",
+							payload: 1
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h4>Reducers</h4>
+
+					<p>Son funciones puras que, dado el estado actual y una acción, devuelven un nuevo estado.</p>
+
+					<pre><code class="javascript" data-trim>
+						const counterReducer = (state = 0, action) => {
+							switch (action.type) {
+								case "INCREASE_COUNTER":
+									return state + action.payload
+								case "DECREASE_COUNTER":
+									return state - action.payload
+								case "RESET_COUNTER":
+									return 0
+								default:
+									return state
+							}
+						}
+					</code></pre>
+				</section>
+				<section>
+					<h4>Store</h4>
+
+					<p>Es el objeto que almacena el estado de la aplicación. Implementa el patrón <i>Observer</i> para comunicarse con los componentes de la interfaz de forma reactiva.</p>
+
+					<p>El estado se puede consultar en cualquier momento con <code>getState()</code>. Para modificarlo hay que llamar a <code>dispatch(action)</code>.</p>
+				</section>
+				<section>
+					<p>Es de vital importancia que <b>solo exista un <i>Store</i></b> en toda la aplicación para cumplir el principio de <i>única fuente de verdad</i>.</p>
+				</section>
+				<section>
+					<p>Redux nos ofrece métodos de ayuda para crear el <i>Store</i> a partir de la combinación de nuestros <i>Reducers</i>.</p>
+
+					<pre class="stretch"><code class="js" data-trim>
+						import { createStore, combineReducers } from 'redux'
+
+						const rootReducer = combineReducers(counterReducer)
+
+						const store = createStore(rootReducer)
+
+						store.subscribe(() => { console.log(store.getState()) })
+
+						store.dispatch(increaseCounterAction) // 1
+						store.dispatch(increaseCounterAction) // 2
+						store.dispatch(resetCounterAction) // 0
+						store.dispatch(decreaseCounterAction) // -1
+					</code></pre>
+				</section>
+			</section>
+
+			<!-- Octava slide: Conclusiones -->
+			<section>
+				<section><h3>Conclusiones</h3></section>
+				<section>Pues ha estado muy bien supongo</section>
+			</section>
+
+			<!-- Final -->
+			<section>
+				Volver a poner la primera slide
 			</section>
 		</div>
 	</div>
