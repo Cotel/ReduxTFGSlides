@@ -168,23 +168,35 @@
 					</textarea>
 				</section>
 				<section>
-					<p><b>Inmutabilidad</b>: La modificación de un objeto se hace mediante copia en vez de mutación directa.</p>
-
-					<pre class="fragment fade-up"><code class="javascript" data-trim>
-						const arrayOfNumbers = [1,2,3]
-						const numsGreaterThan2 = arrayOfNumbers
-							.filter(number => number > 2)
-
-						console.log(arrayOfNumbers) // [1,2,3]
-						console.log(numsGreaterThan2) // [3]
-					</code></pre>
-				</section>
-				<section>
 					<p><b>Funciones puras</b>: Ninguna función realiza efectos secundarios (llamadas a base de datos, sevicios externos, etc.).</p>
 
 					<pre class="fragment fade-up"><code class="javascript" data-trim>
 						const addOne = x => x + 1
 					</code></pre>
+
+					<aside class="notes">
+						<p>Se considera función pura aquella que leyendo su cabecera se puede saber que hace. Esto tiene mas sentido en lenguajes tipados como Haskell.</p>
+
+						<p>Por normal general una función que no devuelve nada no se considera determinista porque significa que ha causado un efecto.</p>
+					</aside>
+				</section>
+				<section>
+					<p><b>Inmutabilidad</b>: La modificación de un objeto se hace mediante copia en vez de mutación directa.</p>
+					
+					<pre class="fragment fade-up"><code class="javascript" data-trim>
+						const arrayOfNumbers = [1,2,3]
+						const numsGreaterThan2 = arrayOfNumbers
+						.filter(number => number > 2)
+						
+						console.log(arrayOfNumbers) // [1,2,3]
+						console.log(numsGreaterThan2) // [3]
+					</code></pre>
+					
+					<aside class="notes">
+						<p>La inmutabilidad es mas fácil de depurar y menos propensa a errores.</p>
+						
+						<p>La mutación esconde el cambio y se considera como un efecto secundario. No es determinista.</p>
+					</aside>
 				</section>
 				<section>
 					<p>El cumplimiento de estos principios provoca que las funciones se vuelvan <b>deterministas</b>. Es decir, para un mismo <i>input</i>	el <i>output</i> siempre es el mismo.</p>
@@ -205,6 +217,10 @@
 					<p>Todo el estado de la aplicación se representa como un árbol. Se almacena en un componente <b><i>Store</i></b>.</p>
 
 					<p>Todos los componentes de la interfaz extraen los datos de este componente.</p>
+
+					<aside class="notes">
+						<p>El estado de toda la aplicación queda centralizado lo que hace que depurar la aplicación sea más facil.</p>
+					</aside>
 				</section>
 				<section>
 					<h4>Estado protegido contra escritura</h4>
@@ -241,6 +257,10 @@
 							payload: 1
 						}
 					</code></pre>
+
+					<aside class="notes">
+						Es recomendable que todos las acciones tengan la misma estructura y pasar la menor cantidad de información para facilitar el manejo de estos objetos.
+					</aside>
 				</section>
 				<section>
 					<h4>Reducers</h4>
@@ -261,6 +281,12 @@
 							}
 						}
 					</code></pre>
+
+					<aside class="notes">
+						<p>Para construir una aplicación completa con un estado complejo necesitamos componer varios reducers. Redux nos proporciona una función combineReducers para ello.</p>
+
+						<p>Cuando se propaga una acción todos los reducers la reciben. Por ello siempre ha de haber un caso default en el switch. Si la acción no tiene nada que ver con la parte del estado que maneja el Reducer no se hace nada y se devuelve el mismo estado.</p>
+					</aside>
 				</section>
 				<section>
 					<h4>Store</h4>
@@ -301,6 +327,16 @@
 					<p>Es <b>sencillo</b> porque tiene pocos componentes.</p>
 
 					<p>Es una herramienta más y hay que saber cuándo aplicarla.</p>
+
+					<aside class="notes">
+						<p>El principal problema de MVC es que los datos pueden llegar desde varios puntos y cuando la aplicación crece es dificil mantener el control.</p>
+
+						<p>Redux, con su principio de unica fuente de verdad, provoca que los cambios sean facilmente rastreables.</p>
+
+						<p>Por otra parte, no es una solución perfecta e introduce duras restricciones como la representación del estado de la aplicación y sus cambios en objetos o el uso extremo de funciones puras.</p>
+
+						<p>La organización del estado también se puede volver un problema rapidamente debido a las modificaciones inmutables que tienden a complicarse cuando existe mucha anidación.</p>
+					</aside>
 				</section>
 			</section>
 
