@@ -28,7 +28,7 @@
 		<div class="slides">
 			<!-- Primera slide: Título, autor y fecha -->
 			<section>
-				<h3>Desarrollo de Aplicaciones Frontend con arquitectura Redux</h1>
+				<h3 style="color: #744cbc">Desarrollo de Aplicaciones Frontend con arquitectura Redux</h3>
 					<br>
 					<p>Miguel Coleto Muñoz</p>
 					<br>
@@ -40,14 +40,22 @@
 			</section>
 
 			<!-- Segunda slide: Motivación del TFG -->
-			<section data-markdown>
-				<textarea data-template>
-					Una arquitectura software facilita la comunicación entre los desarrolladores de un proyecto.
+			<section>
+					<p>Una arquitectura software facilita la comunicación entre los desarrolladores de un proyecto.</p>
 
-					Cada proyecto tiene unas necesidades concretas que **no permiten que exista una arquitectura perfecta** para todos los casos.
+					<p class="fragment">Cada proyecto tiene unas necesidades concretas. <b>No existe una arquitectura perfecta</b> para todos los casos.</p>
 					
-					Conocer muchos patrones nos proporciona herramientas para tomar mejores decisiones como ingenieros.
-				</textarea>
+					<p class="fragment">Conocer muchos patrones nos proporciona herramientas para tomar mejores decisiones como ingenieros.</p>
+					
+					<aside class="notes">
+						<p>Una arquitectura software son unas guias generales que indican la estructura, funcionamiento e interacción entre las partes del software.</p>
+
+						<p>Una buena arquitectura nos ayuda a resolver problemas recurrentes, realizar cambios sin afectar a todo el proyecto y a facilitar la comunicación en el equipo.</p>
+
+						<p>Cada proyecto tiene unas necesidades especificas, por ello no existe una arquitectura perfecta apta para todos los casos.</p>
+
+						<p>Contar con muchas herramientas en nuestro repertorio nos hace mejores ingenieros ya que nos permite tomar mejores decisiones y aplicar la solucion correcta en cada caso.</p>
+					</aside>
 			</section>
 
 			<!-- Tercera slide: Estructura de la presentación -->
@@ -70,16 +78,34 @@
 					<p><b>Redux</b> es una librería para el manejo del estado de aplicaciones Javascript</p>
 					<p>Fue creada por Dan Abramov en 2015</p>
 					<img src="resources/dan_abramov.jpeg">
+
+					<aside class="notes">
+						<p>Con el avance de la tecnología cada vez las aplicaciones tienen mas capacidades y funcionalidades.</p>
+
+						<p>Pero la complejidad de nuestros proyectos tambien crece cada vez. Una de las principales razones de aumentos de complejidad es el manejo del estado tanto del modelo como de la interfaz.</p>
+					</aside>
 				</section>
 				<section>
-					<p>Las aquitecturas tradicionales basadas en <i>Model View Controller</i> permiten la comunicación bidireccional entre componentes</p>
+					<p>Las aquitecturas tradicionales basadas en <i>Model View Controller</i> proponen la comunicación bidireccional entre componentes</p>
 
 					<img src="resources/mvc_diagram.png">
 
-					<p>Redux propone que el flujo de datos a lo largo de la aplicación sea <b>unidireccional</b></p>
+					<aside class="notes">
+						<p>El principal problema de arquitecturas clásicas como MVC es que la comunicación entre componentes es bidireccional.</p>
+
+						<p>Esto provoca que un cambio pueda afectar a muchas partes del conjunto lo que dificulta el entendimiento y depuración del proyecto.</p>
+					</aside>
 				</section>
 				<section>
 					<p>Redux busca que los cambios en el estado sean <b>PREDECIBLES</b></p>
+					
+					<p>Para ello propone que el flujo de datos a lo largo de la aplicación sea <b>unidireccional</b></p>
+
+					<aside class="notes">
+						<p>Un flujo unidireccional nos permite seguir facilmente todo el recorrido de un cambio y crear un mapa mental que facilita la visión del proyecto.</p>
+
+						<p>Gracias a esta abstracción el programador es capaz de reflexionar y predecir el resultado de las acciones sobre el sistema.</p>
+					</aside>
 				</section>
 			</section>
 
@@ -103,21 +129,26 @@
 
 						Lenguaje de programación funcional tipado que compila a Javascript.
 
-						El propio diseño del lenguaje potencia el uso de una arquitectura unidireccional.
+						Propone el uso de una arquitectura unidireccional.
 
 						![Diagrama de Elm](resources/elm_diagram.svg)
 					</textarea>
 				</section>
-				<section data-markdown>
+				<section data-markdown data-separator-notes="^Note:">
 					<textarea data-template>
 						**CQRS**
 
 						Es un patrón arquitectónico que propone la separación entre acciones de escritura y lectura en dos subsistemas.
 
 						Separar estas responsabilidades permite aplicar lógica más específica a cada proceso.
+
+						Note:
+						Como cualquier patrón arquitectonico CQRS introduce dificultades.
+
+						En este caso mantener ambos sistemas sincronizados requiere definir un protocolo de transacción centralizado para asegurar que no existen condiciones de carrera.
 					</textarea>
 				</section>
-				<section data-markdown>
+				<section data-markdown data-separator-notes="^Note:">
 					<textarea data-template>
 						**Event Sourcing**
 
@@ -125,7 +156,10 @@
 
 						Propone registrar todos los eventos de dominio para mantener un historial con todos los sucesos que han modificado el estado.
 
-						Nos proporciona mecanismos para deshacer y rehacer acciones y poder reconstruir el estado y facilitar su auditoría.
+						Note:
+						Event Sourcing ayuda a CQRS a definir un registro ordenado de los eventos que se propagan en la aplicación que se guardan ordenados cronologicamente.
+
+						La reconstrucción ordenada de estos eventos nos permite restaurar el sistema en puntos anteriores y ver su evolución.
 					</textarea>
 				</section>
 				<section data-markdown>
@@ -136,7 +170,7 @@
 				<section>
 					<p><b>Inmutabilidad</b>: La modificación de un objeto se hace mediante copia en vez de mutación directa.</p>
 
-					<pre><code class="javascript" data-trim>
+					<pre class="fragment fade-up"><code class="javascript" data-trim>
 						const arrayOfNumbers = [1,2,3]
 						const numsGreaterThan2 = arrayOfNumbers
 							.filter(number => number > 2)
@@ -148,7 +182,7 @@
 				<section>
 					<p><b>Funciones puras</b>: Ninguna función realiza efectos secundarios (llamadas a base de datos, sevicios externos, etc.).</p>
 
-					<pre><code class="javascript" data-trim>
+					<pre class="fragment fade-up"><code class="javascript" data-trim>
 						const addOne = x => x + 1
 					</code></pre>
 				</section>
@@ -261,13 +295,27 @@
 			<!-- Octava slide: Conclusiones -->
 			<section>
 				<section><h3>Conclusiones</h3></section>
-				<section>Pues ha estado muy bien supongo</section>
+				<section>
+					<p>Redux, a diferencia de <i>MVC</i>, propone un flujo <b>unidireccional</b> de los datos.</p>
+
+					<p>Es <b>sencillo</b> porque tiene pocos componentes.</p>
+
+					<p>Es una herramienta más y hay que saber cuándo aplicarla.</p>
+				</section>
 			</section>
 
 			<!-- Final -->
 			<section>
-				Volver a poner la primera slide
-			</section>
+					<h3 style="color: #744cbc">Desarrollo de Aplicaciones Frontend con arquitectura Redux</h3>
+						<br>
+						<p>Miguel Coleto Muñoz</p>
+						<br>
+						<div style="font-size: 20px">
+							<p>Tutorizado por Vicente Pelechano Ferragud</p>
+							<p>Grado en Ingeniería Infórmatica</p>
+							<p>Curso 2017-2018</p>
+						</div>
+				</section>
 		</div>
 	</div>
 
